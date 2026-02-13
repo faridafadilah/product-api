@@ -139,3 +139,4 @@
 /Users/faridafadilah/my-project/dotnet/MyProject/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/faridafadilah/my-project/dotnet/MyProject/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/faridafadilah/my-project/dotnet/MyProject/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/faridafadilah/my-project/dotnet/MyProject/obj/Debug/net9.0/MyProject.sourcelink.json

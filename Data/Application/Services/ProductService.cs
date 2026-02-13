@@ -2,6 +2,7 @@ using AuthApi.Application.Interfaces;
 using AuthApi.Application.Repository.Interfaces;
 using AuthApi.Models;
 using AuthApi.Models.Common;
+using Microsoft.EntityFrameworkCore;
 namespace AuthApi.Application.Services
 {
     public class ProductService : IProductService
@@ -12,10 +13,37 @@ namespace AuthApi.Application.Services
             _repository = repository;
         }
 
-        public async Task<ServiceResult<IEnumerable<Product>>> GetAllAsync()
+        public async Task<ServiceResult<object>> GetAllAsync(
+            string? search,
+            string? category,
+            int page,
+            int limit)
         {
-            var data = await _repository.GetAllAsync();
-            return ServiceResult<IEnumerable<Product>>.Ok(data);
+            var query = await _repository.GetQueryableAsync();
+
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.Title.ToLower().Contains(search.ToLower()));
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(x => x.Category.ToLower() == category.ToLower());
+
+            var totalItems = await query.CountAsync();
+
+            var items = await query
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToListAsync();
+
+            var result = new
+            {
+                totalItems,
+                page,
+                limit,
+                totalPages = (int)Math.Ceiling((double)totalItems / limit),
+                items
+            };
+
+            return ServiceResult<object>.Ok(result);
         }
 
         public async Task<ServiceResult<Product>> GetByIdAsync(int id)

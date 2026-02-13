@@ -31,16 +31,21 @@ public class ProductsController : ControllerBase
 
     /// Get all products.
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? search,
+        [FromQuery] string? category,
+        [FromQuery] int page = 1,
+        [FromQuery] int limit = 10)
     {
-        var result = await _service.GetAllAsync();
+        var result = await _service.GetAllAsync(search, category, page, limit);
 
-        return Ok(new ApiResponse<IEnumerable<Product>>(
+        return Ok(new ApiResponse<object>(
             200,
             "Products retrieved successfully.",
             result.Data
         ));
     }
+
 
     /// Get product by ID.
     [HttpGet("{id}")]

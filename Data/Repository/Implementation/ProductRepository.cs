@@ -16,9 +16,9 @@ namespace AuthApi.Application.Repository.Implementation
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public Task<IQueryable<Product>> GetQueryableAsync()
         {
-            return await _context.Products.ToListAsync();
+            return Task.FromResult(_context.Products.AsQueryable());
         }
 
         public async Task<Product> GetByIdAsync(int id)
