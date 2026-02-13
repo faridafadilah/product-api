@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "5078:5000" # host:container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=mydb;Username=postgres;Password=postgres
+      - Jwt__Key=YourSuperSecretKeyHereThatIsLongEnough123
+      - Jwt__Issuer=AuthApi
+      - Jwt__Audience=AuthApiUsers
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
