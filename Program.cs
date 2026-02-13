@@ -23,8 +23,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
-
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -130,7 +128,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthApi v1");
-    c.RoutePrefix = "swagger";// supaya Swagger muncul di root URL
+    c.RoutePrefix = "swagger";
 });
 
 app.MapControllers();
