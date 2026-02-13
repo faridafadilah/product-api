@@ -78,8 +78,11 @@ public class ProductsController : ControllerBase
             Category = dto.Category,
             Images = dto.Images,
             CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow,
             CreatedBy = GetUsername(),
-            CreatedById = GetUserId()
+            CreatedById = GetUserId(),
+            UpdatedBy = GetUsername(),
+            UpdatedById = GetUserId()
         };
 
         var result = await _service.CreateAsync(product);
